@@ -57,8 +57,7 @@ module.exports = {
             'process.env.NODE_ENV': '"production"' 
         }),
         new HtmlWebpackPlugin({
-            title: 'multi-vendor-bundles',
-            chunks: [ 'app' ]
+            title: 'multi-vendor-bundles'
         }),
         new webpack.optimize.CommonsChunkPlugin({
             names: ['ui_module', 'manifest'],
