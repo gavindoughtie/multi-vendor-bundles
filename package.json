@@ -1,0 +1,21 @@
+{
+    "scripts": {
+        "start": "node -r babel-register production-server.js",
+        "build": "webpack --env"
+    },
+    "dependencies": {
+        "immutable": "^3.8.1",
+        "react": "^15.4.1",
+        "react-dom": "^15.4.1",
+        "redux": "^3.6.0"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.18.0",
+        "babel-loader": "^6.2.10",
+        "babel-plugin-dynamic-import-webpack": "^1.0.1",
+        "babel-preset-es2015": "^6.18.0",
+        "babel-preset-react": "^6.16.0",
+        "html-webpack-plugin": "^2.24.1",
+        "webpack": "beta"
+    }
+}

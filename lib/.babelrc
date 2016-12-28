@@ -1,0 +1,9 @@
+// This .babelrc transforms the application code with native
+// es6 module support (no CommonJS conversion).
+{
+    "presets": [
+        ["es2015", { "modules": false }],
+        "react"
+    ],
+    "plugins": ["dynamic-import-webpack"]
+}

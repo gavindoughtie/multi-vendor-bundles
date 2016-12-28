@@ -1,0 +1,12 @@
+// This .babelrc is just for transforming webpack.config.babel.js
+// The actual application .babelrc is in ./app/.babelrc
+// See https://github.com/webpack/webpack/issues/2806
+// TODO(gavindoughtie): remove when node supports ES6 import
+//     statements natively.
+{
+    "presets": [
+        "es2015",
+        "react"
+    ],
+    "plugins": ["dynamic-import-webpack"]
+}
