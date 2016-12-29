@@ -10,62 +10,99 @@ const PATHS = {};
 });
 
 const uiVendorEntries = [
-    'babel-polyfill',
     'react',
-    'react-dom',
 ];
 
 const dataVendorEntries = [
+    'babel-polyfill',
+    'react-dom',
     'immutable',
     'redux',
     'react-redux'
 ]
 
-module.exports = {
-    entry:
+module.exports = [
     {
-        ui_module: uiVendorEntries,
-        data_module: dataVendorEntries,
-        app: path.join(PATHS.lib, 'index.js')
+        entry:
+        {
+            ui_module: uiVendorEntries,
+        },
+        resolve: {
+            extensions: ['.js', '.jsx']
+        },
+        output:
+        {
+            path: PATHS.build,
+            filename: '[name].[hash].js',
+            chunkFilename: '[name].[chunkhash].js',
+            publicPath: '' 
+        },
+        module:
+        {
+            rules:
+            [ {
+                test: /\.jsx?$/,
+                use: [ {
+                    loader: 'babel-loader', options: {
+                        cacheDirectory: true 
+                    } 
+                } ],
+                include: PATHS.lib 
+            }],
+        },
+        plugins:
+        [
+            new webpack.DefinePlugin({
+                'process.env.NODE_ENV': '"production"' 
+            }),
+            new webpack.optimize.CommonsChunkPlugin({
+                names: ['ui_module']
+            })
+        ],
     },
-    resolve: {
-        extensions: ['.js', '.jsx']
-    },
-    output:
     {
-        path: PATHS.build,
-        filename: '[name].[hash].js',
-        chunkFilename: '[name].[chunkhash].js',
-        publicPath: '' 
-    },
-    module:
-    {
-        rules:
-        [ {
-            test: /\.jsx?$/,
-            use: [ {
-                loader: 'babel-loader', options: {
-                    cacheDirectory: true 
-                } 
-            } ],
-            include: PATHS.lib 
-        }],
-    },
-    plugins:
-    [
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': '"production"' 
-        }),
-        new HtmlWebpackPlugin({
-            title: 'multi-vendor-bundles',
-            chunks: ['app'],
-            chunkNames: ['manifest']
-        }),
-        new webpack.optimize.CommonsChunkPlugin({
-            names: ['ui_module', 'manifest']
-        }),
-        new webpack.optimize.CommonsChunkPlugin({
-            names: ['data_module', 'manifest']
-        })
-    ],
-}
+        entry:
+        {
+            data_module: dataVendorEntries,
+            discard: path.join(PATHS.lib, 'shim_entry.js')
+        },
+        resolve: {
+            extensions: ['.js', '.jsx']
+        },
+        output:
+        {
+            path: PATHS.build,
+            filename: '[name].[hash].js',
+            chunkFilename: '[name].[chunkhash].js',
+            publicPath: '' 
+        },
+        module:
+        {
+            rules:
+            [ {
+                test: /\.jsx?$/,
+                use: [ {
+                    loader: 'babel-loader', options: {
+                        cacheDirectory: true 
+                    } 
+                } ],
+                include: PATHS.lib 
+            }],
+        },
+        plugins:
+        [
+            new webpack.DefinePlugin({
+                'process.env.NODE_ENV': '"production"' 
+            }),
+            new webpack.optimize.CommonsChunkPlugin({
+                names: ['data_module'],
+                entries: dataVendorEntries
+            }),
+            new webpack.optimize.CommonsChunkPlugin({
+                names: ['discard'],
+                entries: uiVendorEntries
+            })
+        ],
+    }
+
+]
