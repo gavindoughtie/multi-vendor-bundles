@@ -24,8 +24,8 @@ const dataVendorEntries = [
 module.exports = {
     entry:
     {
-        ui_module: path.join(PATHS.lib, 'ui_module'),
-        data_module: path.join(PATHS.lib, 'data_module'),
+        ui_module: uiVendorEntries,
+        data_module: dataVendorEntries,
         app: path.join(PATHS.lib, 'index.js')
     },
     resolve: {
@@ -60,16 +60,12 @@ module.exports = {
             title: 'multi-vendor-bundles',
             chunks: ['app'],
             chunkNames: ['manifest']
-        })
-        /*
-        new webpack.optimize.CommonsChunkPlugin({
-            names: ['ui_module', 'manifest'],
-            entries: uiVendorEntries
         }),
         new webpack.optimize.CommonsChunkPlugin({
-            names: ['data_module', 'manifest'],
-            entries: dataVendorEntries
+            names: ['ui_module', 'manifest']
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            names: ['data_module', 'manifest']
         })
-        */
     ],
 }
