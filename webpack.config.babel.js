@@ -62,10 +62,23 @@ module.exports = {
             chunkNames: ['manifest']
         }),
         new webpack.optimize.CommonsChunkPlugin({
-            names: ['ui_module', 'manifest']
+            names: ['ui_module', 'data_module', 'manifest'],
+            minChunks: Infinity
         }),
-        new webpack.optimize.CommonsChunkPlugin({
-            names: ['data_module', 'manifest']
-        })
+            new webpack.optimize.UglifyJsPlugin({
+                beautify: false,
+                comments: false,
+                compress: {
+                    warnings: false,
+                    drop_console: true
+                },
+                mangle: {
+                    except: ['webpackJsonp']
+                }
+            }),
+            new webpack.LoaderOptionsPlugin({
+                minimize: true,
+                debug: false
+            })
     ],
 }
