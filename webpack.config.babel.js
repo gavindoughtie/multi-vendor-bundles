@@ -25,7 +25,7 @@ module.exports = {
     {
         ui_module: uiVendorEntries,
         data_module: dataVendorEntries,
-        app: path.join(PATHS.lib, 'shim_entry.js')
+        app: path.join(PATHS.lib, 'index.js')
     },
     resolve: {
         extensions: ['.js', '.jsx']
@@ -54,6 +54,9 @@ module.exports = {
     [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': '"production"' 
+        }),
+        new HtmlWebpackPlugin({
+            title: 'Chunk loading demo'
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'commons',
