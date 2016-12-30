@@ -1,7 +1,8 @@
 {
     "scripts": {
         "start": "node -r babel-register production-server.js",
-        "build": "webpack --env"
+        "build": "webpack --env",
+        "stats": "webpack --profile --json > stats.json && echo \"Analyze 'stats.json' via: http://webpack.github.io/analyse/\""
     },
     "dependencies": {
         "immutable": "^3.8.1",

@@ -10,99 +10,60 @@ const PATHS = {};
 });
 
 const uiVendorEntries = [
+    'fbjs',
     'react',
+    'react-dom',
 ];
 
 const dataVendorEntries = [
     'babel-polyfill',
-    'react-dom',
     'immutable',
     'redux',
     'react-redux'
 ]
 
-module.exports = [
+module.exports = {
+    entry:
     {
-        entry:
-        {
-            ui_module: uiVendorEntries,
-        },
-        resolve: {
-            extensions: ['.js', '.jsx']
-        },
-        output:
-        {
-            path: PATHS.build,
-            filename: '[name].[hash].js',
-            chunkFilename: '[name].[chunkhash].js',
-            publicPath: '' 
-        },
-        module:
-        {
-            rules:
-            [ {
-                test: /\.jsx?$/,
-                use: [ {
-                    loader: 'babel-loader', options: {
-                        cacheDirectory: true 
-                    } 
-                } ],
-                include: PATHS.lib 
-            }],
-        },
-        plugins:
-        [
-            new webpack.DefinePlugin({
-                'process.env.NODE_ENV': '"production"' 
-            }),
-            new webpack.optimize.CommonsChunkPlugin({
-                names: ['ui_module']
-            })
-        ],
+        ui_module: uiVendorEntries,
+        data_module: dataVendorEntries,
+        app: path.join(PATHS.lib, 'shim_entry.js')
     },
+    resolve: {
+        extensions: ['.js', '.jsx']
+    },
+    output:
     {
-        entry:
-        {
-            data_module: dataVendorEntries,
-            discard: path.join(PATHS.lib, 'shim_entry.js')
-        },
-        resolve: {
-            extensions: ['.js', '.jsx']
-        },
-        output:
-        {
-            path: PATHS.build,
-            filename: '[name].[hash].js',
-            chunkFilename: '[name].[chunkhash].js',
-            publicPath: '' 
-        },
-        module:
-        {
-            rules:
-            [ {
-                test: /\.jsx?$/,
-                use: [ {
-                    loader: 'babel-loader', options: {
-                        cacheDirectory: true 
-                    } 
-                } ],
-                include: PATHS.lib 
-            }],
-        },
-        plugins:
-        [
-            new webpack.DefinePlugin({
-                'process.env.NODE_ENV': '"production"' 
-            }),
-            new webpack.optimize.CommonsChunkPlugin({
-                names: ['data_module'],
-                entries: dataVendorEntries
-            }),
-            new webpack.optimize.CommonsChunkPlugin({
-                names: ['discard'],
-                entries: uiVendorEntries
-            })
-        ],
-    }
-
-]
+        path: PATHS.build,
+        filename: '[name].[hash].js',
+        chunkFilename: '[name].[chunkhash].js',
+        publicPath: '' 
+    },
+    module:
+    {
+        rules:
+        [ {
+            test: /\.jsx?$/,
+            use: [ {
+                loader: 'babel-loader', options: {
+                    cacheDirectory: true 
+                } 
+            } ],
+            include: PATHS.lib 
+        }],
+    },
+    plugins:
+    [
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': '"production"' 
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'commons',
+            chunks: ['data_module', 'ui_module', 'app'],
+            minChunks: 2
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'manifest'
+        })
+    ]
+};
