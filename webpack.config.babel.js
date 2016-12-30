@@ -10,13 +10,11 @@ const PATHS = {};
 });
 
 const uiVendorEntries = [
-    'fbjs',
     'react',
     'react-dom',
 ];
 
 const dataVendorEntries = [
-    'babel-polyfill',
     'immutable',
     'redux',
     'react-redux'
