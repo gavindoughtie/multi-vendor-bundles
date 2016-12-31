@@ -12,6 +12,7 @@ const PATHS = {};
 const uiVendorEntries = [
     'react',
     'react-dom',
+    'material-ui'
 ];
 
 const dataVendorEntries = [
@@ -52,9 +53,9 @@ module.exports = {
     },
     plugins:
     [
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': '"production"' 
-        }),
+        // new webpack.DefinePlugin({
+        //     'process.env.NODE_ENV': '"production"' 
+        // }),
         new HtmlWebpackPlugin({
             title: 'Chunk loading demo'
         }),
