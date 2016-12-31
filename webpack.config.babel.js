@@ -12,7 +12,6 @@ const PATHS = {};
 const uiVendorEntries = [
     'react',
     'react-dom',
-    'material-ui'
 ];
 
 const dataVendorEntries = [
@@ -21,11 +20,17 @@ const dataVendorEntries = [
     'react-redux'
 ]
 
+const lateVendorEntries = [
+    'material-ui',
+    'react-tap-event-plugin'
+]
+
 module.exports = {
     entry:
     {
         ui_module: uiVendorEntries,
         data_module: dataVendorEntries,
+        extended_module: lateVendorEntries,
         app: path.join(PATHS.lib, 'index.js')
     },
     resolve: {
@@ -61,7 +66,7 @@ module.exports = {
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'commons',
-            chunks: ['data_module', 'ui_module', 'app'],
+            chunks: ['data_module', 'ui_module', 'extended_module', 'app'],
             minChunks: 2
         }),
         new webpack.optimize.CommonsChunkPlugin({

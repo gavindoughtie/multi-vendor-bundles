@@ -16,10 +16,9 @@ const muiTheme = getMuiTheme({
 injectTapEventPlugin();
 
 export default function App(props) {
-        const middle = props.state === null ? <h1>{props.state}</h1> : <h2>No state</h2>;
         return <MuiThemeProvider muiTheme={muiTheme}>
     <div>
             <AppBar title="Example App" onLeftIconButtonTouchTap={props.handleToggle} />
-    {middle}
+    <h1>{props.state}</h1>
             </div></MuiThemeProvider>
 }
