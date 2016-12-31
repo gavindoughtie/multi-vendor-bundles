@@ -31,7 +31,7 @@ module.exports = {
         ui_module: uiVendorEntries,
         data_module: dataVendorEntries,
         extended_module: lateVendorEntries,
-        app: path.join(PATHS.lib, 'index.js')
+        app: path.join(PATHS.lib, 'shim_entry.js')
     },
     resolve: {
         extensions: ['.js', '.jsx']
@@ -58,15 +58,16 @@ module.exports = {
     },
     plugins:
     [
-        // new webpack.DefinePlugin({
-        //     'process.env.NODE_ENV': '"production"' 
-        // }),
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': '"production"' 
+        }),
         new HtmlWebpackPlugin({
             title: 'Chunk loading demo'
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'commons',
-            chunks: ['data_module', 'ui_module', 'extended_module', 'app'],
+//            chunks: ['data_module', 'ui_module', 'extended_module', 'app'],
+//            async: 'commons-async',
             minChunks: 2
         }),
         new webpack.optimize.CommonsChunkPlugin({
